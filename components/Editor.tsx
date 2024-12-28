@@ -3,7 +3,7 @@ import ReactMde from "react-mde"
 import Showdown from "showdown"
 
 export default function Editor({ tempNoteText, setTempNoteText }) {
-    const [selectedTab, setSelectedTab] = React.useState("write")
+    const [selectedTab, setSelectedTab] = React.useState<"write" | "preview">("write")
 
     const converter = new Showdown.Converter({
         tables: true,
