@@ -5,23 +5,27 @@ import Split from "react-split"
 import { onSnapshot, addDoc, doc, deleteDoc, setDoc } from "firebase/firestore"
 import { notesCollection, db } from "../firebase"
 
+type Note = {
+  id: string;
+  body: string;
+  createdAt: number;
+  updatedAt: number
+}
+
 export default function App() {
-  const [notes, setNotes] = React.useState([])
-  
-  const [currentNoteId, setCurrentNoteId] = React.useState("")
-  
-  const [tempNoteText, setTempNoteText] = React.useState("")
+  const [notes, setNotes] = React.useState<Note[]>([])
+  const [currentNoteId, setCurrentNoteId] = React.useState<string>("")
+  const [tempNoteText, setTempNoteText] = React.useState<string>("")
 
   const currentNote = notes.find(note => note.id === currentNoteId) || notes[0]
-  
   const sortedNotes = notes.sort((a, b) => b.updatedAt - a.updatedAt)
 
   React.useEffect(() => {
     const unsubscribe = onSnapshot(notesCollection, function(snapshot) {
-      const notesArr = snapshot.docs.map(doc => ({
+      const notesArr: Note[] = snapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id
-      }))
+      })) as Note[]
       setNotes(notesArr)
     })
     return unsubscribe
