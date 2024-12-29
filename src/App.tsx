@@ -62,14 +62,14 @@ export default function App() {
     setCurrentNoteId(newNoteRef.id)
   }
 
-  async function updateNote(text) {
+  async function updateNote(text: Note["body"]) {
     const docRef = doc(db, "notes", currentNoteId)
     await setDoc(docRef,
       { body: text, updatedAt: Date.now() },
       { merge: true })
   }
   
-  async function deleteNote(noteId) {
+  async function deleteNote(noteId: Note["id"]) {
     const docRef = doc(db, "notes", noteId)
     await deleteDoc(docRef)
   }
