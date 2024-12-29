@@ -4,13 +4,7 @@ import Editor from "../components/Editor"
 import Split from "react-split"
 import { onSnapshot, addDoc, doc, deleteDoc, setDoc } from "firebase/firestore"
 import { notesCollection, db } from "../firebase"
-
-type Note = {
-  id: string;
-  body: string;
-  createdAt: number;
-  updatedAt: number
-}
+import { Note } from "../types"
 
 export default function App() {
   const [notes, setNotes] = React.useState<Note[]>([])
