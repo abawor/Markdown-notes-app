@@ -1,5 +1,6 @@
 import React from "react"
 import { SidebarProps } from "../types"
+import { FaHeart } from "react-icons/fa";
 
 export default function Sidebar(props: SidebarProps) {
     const noteElements = props.notes.map((note) => (
@@ -17,6 +18,12 @@ export default function Sidebar(props: SidebarProps) {
                     onClick={() => props.deleteNote(note.id)}
                 >
                     <i className="gg-trash trash-icon"></i>
+                </button>
+                <button 
+                    className={note.favourite ? "fav-note" : "fav-btn"}
+                    onClick={() => props.toggleFavourite(note.id)}
+                >
+                    <FaHeart />
                 </button>
             </div>
         </div>

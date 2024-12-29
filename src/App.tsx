@@ -2,7 +2,7 @@ import React from "react"
 import Sidebar from "../components/Sidebar"
 import Editor from "../components/Editor"
 import Split from "react-split"
-import { onSnapshot, addDoc, doc, deleteDoc, setDoc } from "firebase/firestore"
+import { onSnapshot, addDoc, doc, getDoc, deleteDoc, setDoc } from "firebase/firestore"
 import { notesCollection, db } from "../firebase"
 import { Note } from "../types"
 
@@ -75,6 +75,29 @@ export default function App() {
       return false
     } 
   }
+
+  async function toggleFavourite(noteId: Note["id"]): Promise<boolean> {
+    try {
+      const docRef = doc(db, "notes", noteId)
+      const noteDoc = await getDoc(docRef)
+      const noteData = noteDoc.data()
+     
+      if (noteData) {
+        await setDoc(docRef,
+          { favourite: !noteData.favourite },
+          { merge: true }
+        )
+      } else {
+        alert("Cannot access note details.")
+        return false
+      }
+      
+      return true
+    } catch (error) {
+      alert("Failed to add note to favourites: " + error)
+      return false
+    } 
+  }
   
   async function deleteNote(noteId: Note["id"]): Promise<boolean> {
     try {
@@ -102,6 +125,7 @@ export default function App() {
           currentNote={currentNote}
           setCurrentNoteId={setCurrentNoteId}
           newNote={createNewNote}
+          toggleFavourite={toggleFavourite}
           deleteNote={deleteNote}
         />
         <Editor 

@@ -141,6 +141,19 @@ button:focus {
   background-color: whitesmoke;
 }
 
+.fav-btn {
+  background: none;
+  border: none;
+  display: block;
+}
+
+.fav-note {
+  background: none;
+  border: none;
+  display: block;
+  color: red;
+}
+
 .delete-btn {
   display: none;
   background: none;
