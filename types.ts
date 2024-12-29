@@ -9,6 +9,6 @@ export type SidebarProps = {
     notes: Note[];
     currentNote: Note;
     setCurrentNoteId: React.Dispatch<React.SetStateAction<string>>;
-    newNote: () => Promise<void>;
-    deleteNote: (noteId: Note["id"]) => Promise<void>;
+    newNote: () => Promise<boolean>;
+    deleteNote: (noteId: Note["id"]) => Promise<boolean>;
 };

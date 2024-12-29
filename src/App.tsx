@@ -46,26 +46,45 @@ export default function App() {
     return () => clearTimeout(timeoutId)
   }, [tempNoteText])
 
-  async function createNewNote() {
-    const newNote = {
-      body: "# Type your markdown note's title here",
-      createdAt: Date.now(),
-      updatedAt: Date.now()
+  async function createNewNote(): Promise<boolean> {
+    try {
+      const newNote = {
+        body: "# Type your markdown note's title here",
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      }
+      const newNoteRef = await addDoc(notesCollection, newNote)
+      setCurrentNoteId(newNoteRef.id)
+      return true
+    } catch (error) {
+      alert("Failed to delete note: " + error)
+      return false
     }
-    const newNoteRef = await addDoc(notesCollection, newNote)
-    setCurrentNoteId(newNoteRef.id)
   }
 
-  async function updateNote(text: Note["body"]) {
-    const docRef = doc(db, "notes", currentNoteId)
-    await setDoc(docRef,
-      { body: text, updatedAt: Date.now() },
-      { merge: true })
+  async function updateNote(text: Note["body"]): Promise<boolean> {
+    try {
+      const docRef = doc(db, "notes", currentNoteId)
+      await setDoc(docRef,
+        { body: text, updatedAt: Date.now() },
+        { merge: true }
+      )
+      return true
+    } catch (error) {
+      alert("Failed to update note body: " + error)
+      return false
+    } 
   }
   
-  async function deleteNote(noteId: Note["id"]) {
-    const docRef = doc(db, "notes", noteId)
-    await deleteDoc(docRef)
+  async function deleteNote(noteId: Note["id"]): Promise<boolean> {
+    try {
+      const docRef = doc(db, "notes", noteId)
+      await deleteDoc(docRef)
+      return true
+    } catch (error) {
+      alert("Failed to delete note: " + error)
+      return false
+    }
   }
       
   return (
