@@ -8,8 +8,8 @@ import { Note } from "../types"
 
 export default function App() {
   const [notes, setNotes] = React.useState<Note[]>([])
-  const [currentNoteId, setCurrentNoteId] = React.useState<string>("")
-  const [tempNoteText, setTempNoteText] = React.useState<string>("")
+  const [currentNoteId, setCurrentNoteId] = React.useState<Note["id"]>("")
+  const [tempNoteText, setTempNoteText] = React.useState<Note["body"]>("")
 
   const currentNote = notes.find(note => note.id === currentNoteId) || notes[0]
   const sortedNotes = notes.sort((a, b) => b.updatedAt - a.updatedAt)
