@@ -100,6 +100,9 @@ export default function App() {
   }
   
   async function deleteNote(noteId: Note["id"]): Promise<boolean> {
+    if(!confirm("Are you sure you want to delete this note?\nYou will not be able to undo this action")) {
+      return false
+    }
     try {
       const docRef = doc(db, "notes", noteId)
       await deleteDoc(docRef)
