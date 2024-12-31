@@ -1,7 +1,5 @@
 import React from "react"
-import { it, expect, describe } from "vitest"
 import { render, screen } from "@testing-library/react"
-import "@testing-library/jest-dom/vitest"
 import App from "../src/App"
 
 describe("App", () => {
@@ -18,4 +16,5 @@ describe("App", () => {
         const button = screen.getByRole("button", { name: /create one now/i })
         expect(button).toBeInTheDocument()
     })
+
 })
